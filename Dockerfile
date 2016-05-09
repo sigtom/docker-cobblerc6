@@ -15,17 +15,17 @@ RUN rpm -ivh epel-release-6-8.noarch.rpm
 RUN yum -y install cobbler cobbler-web dnsmasq syslinux pykickstart debmirror
 RUN updatedb
 
-# enable tftp and rsync
-RUN sed -i -e 's/\(^.*disable.*=\) yes/\1 no/' /etc/xinetd.d/tftp
-RUN sed -i -e 's/\(^.*disable.*=\) yes/\1 no/' /etc/xinetd.d/rsync
-RUN ed -i.orig "s/#ServerName 127.0.0.1/$HOSTNAME/g" /etc/httpd/conf/httpd.conf
-
 # create rsync file
 #COPY files/rsync /etc/xinetd.d
 COPY files/dnsmasq.template /etc/cobbler
 COPY files/settings /etc/cobbler
 COPY files/modules.conf /etc/cobbler
 COPY files/debmirror.conf /etc
+
+# enable tftp and rsync
+RUN sed -i -e 's/\(^.*disable.*=\) yes/\1 no/' /etc/xinetd.d/tftp
+RUN sed -i -e 's/\(^.*disable.*=\) yes/\1 no/' /etc/xinetd.d/rsync
+RUN ed -i.orig "s/#ServerName 127.0.0.1/$HOSTNAME/g" /etc/httpd/conf/httpd.conf
 
 RUN service cobblerd start
 RUN service httpd start
