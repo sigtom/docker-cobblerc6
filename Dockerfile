@@ -25,7 +25,7 @@ COPY files/debmirror.conf /etc
 # enable tftp and rsync
 RUN sed -i -e 's/\(^.*disable.*=\) yes/\1 no/' /etc/xinetd.d/tftp
 RUN sed -i -e 's/\(^.*disable.*=\) yes/\1 no/' /etc/xinetd.d/rsync
-RUN ed -i.orig "s/#ServerName 127.0.0.1/$HOSTNAME/g" /etc/httpd/conf/httpd.conf
+RUN sed -i.orig "s/#ServerName 127.0.0.1/$HOSTNAME/g" /etc/httpd/conf/httpd.conf
 
 RUN service cobblerd start
 RUN service httpd start
