@@ -27,7 +27,7 @@ COPY files/debmirror.conf /etc
 
 RUN service cobblerd start
 RUN service httpd start
-RUN service dnsmasq start
+#RUN service dnsmasq start
 RUN service xinetd status
 RUN chkconfig cobblerd on
 RUN chkconfig httpd on
