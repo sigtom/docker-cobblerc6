@@ -5,8 +5,8 @@ MAINTAINER "Tommy Craddock" <tec.thor@gmail.com>
 RUN yum -y install nano createrepo httpd mkisofs mod_wsgi mod_ssl python-cheetah python-netaddr python-simplejson python-urlgrabber PyYAML rsync syslinux tftp-server yum-utils Django python-simplejson git make python-devel python-setuptools python-cheetah openssl wget mlocate
 
 #Install EPEL Repo
-wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-rpm -ivh epel-release-6-8.noarch.rpm
+RUN wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+RUN rpm -ivh epel-release-6-8.noarch.rpm
 
 #Install Cobbler
 RUN yum -y install cobbler cobbler-web dnsmasq syslinux pykickstart
@@ -23,9 +23,14 @@ COPY files/settings /etc/cobbler
 COPY files/modules.conf /etc/cobbler
 
 RUN service cobblerd start
-RUN chkconfig cobblerd on
 RUN service httpd start
+RUN service dnsmasq start
+RUN service xinetd status
+RUN chkconfig cobblerd on
 RUN chkconfig httpd on
+RUN chkconfig dnsmasq on
+RUN chkconfig xinetd on
+
 
 EXPOSE 22
 EXPOSE 69
