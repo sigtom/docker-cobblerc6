@@ -2,17 +2,15 @@ FROM sigtom/docker-cent6ssh
 MAINTAINER "Tommy Craddock" <tec.thor@gmail.com>
 
 #Install EPEL Repo
-RUN yum -y install wget
 RUN wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 RUN rpm -ivh epel-release-6-8.noarch.rpm
 COPY files/epel.repo /etc/yum.repos.d
 
 #Install prereqs for cobbler, koan, and cobbler-web
-RUN yum -y install nano createrepo httpd mkisofs mod_wsgi mod_ssl python-cheetah python-netaddr python-simplejson python-urlgrabber PyYAML rsync syslinux tftp-server yum-utils Django python-simplejson git make python-devel python-setuptools python-cheetah openssl mlocate
+RUN yum -y install createrepo httpd mkisofs mod_wsgi mod_ssl python-cheetah python-netaddr python-simplejson PyYAML rsync syslinux tftp-server yum-utils Django python-simplejson git python-devel python-setuptools python-cheetah 
 
 #Install Cobbler
 RUN yum -y install cobbler cobbler-web dnsmasq syslinux pykickstart debmirror
-RUN updatedb
 
 # create rsync file
 #COPY files/rsync /etc/xinetd.d
@@ -43,6 +41,7 @@ RUN chkconfig xinetd on
 RUN echo "user=root" >> /etc/dnsmasq.conf
 RUN service dnsmasq start
 RUN cat /etc/httpd/conf/httpd.conf | grep ServerName
+RUN updatedb
 
 EXPOSE 22
 EXPOSE 69
