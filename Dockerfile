@@ -38,6 +38,11 @@ RUN chkconfig httpd on
 RUN chkconfig dnsmasq on
 RUN chkconfig xinetd on
 
+# solve "dnsmasq: setting capabilities failed: Operation not permitted"
+# refs:https://github.com/nicolasff/docker-cassandra/issues/8
+RUN echo "user=root" >> /etc/dnsmasq.conf
+RUN service dnsmasq start
+RUN cat /etc/httpd/conf/httpd.conf | grep ServerName
 
 EXPOSE 22
 EXPOSE 69
