@@ -7,7 +7,7 @@ RUN rpm -ivh epel-release-6-8.noarch.rpm
 COPY files/epel.repo /etc/yum.repos.d
 
 #Install prereqs for cobbler, koan, and cobbler-web
-RUN yum -y install createrepo httpd mkisofs mod_wsgi mod_ssl python-cheetah python-netaddr python-simplejson PyYAML rsync syslinux tftp-server yum-utils Django python-simplejson git python-devel python-setuptools python-cheetah 
+RUN yum -y install createrepo httpd mkisofs mod_wsgi mod_ssl python-cheetah python-netaddr python-simplejson PyYAML rsync syslinux tftp-server yum-utils Django python-simplejson git python-devel python-setuptools python-cheetah
 
 #Install Cobbler
 RUN yum -y install cobbler cobbler-web dnsmasq syslinux pykickstart debmirror
@@ -48,4 +48,5 @@ EXPOSE 69
 EXPOSE 80
 EXPOSE 25151
 EXPOSE 873
+Expose 443
 CMD ["/bin/bash"]
