@@ -1,24 +1,25 @@
 version: '2'
-app:
-  build: .
-  restart: always
-  privileged: true
-  hostname: cobbler.ahchto.sigtomtech.com
-  ports:
-    - "80:80"
-    - "2202:22"
-    - "69:69"
-    - "25151:21515"
-    - "873:873"
-    - "443:443"
-  network_mode: host
-  volumes:
-    - /sys/fs/cgroup:/sys/fs/cgroup:ro 
-    - etc/cobbler/settings:/etc/cobbler
-    - var/www/cobbler/images:/var/www/cobbler/images 
-    - var/www/cobbler/ks_mirror:/var/www/cobbler/ks_mirror 
-    - var/www/cobbler/links:/var/www/cobbler/links 
-    - var/lib/cobbler/config:/var/lib/cobbler/config
-    - var/lib/tftpboot:/var/lib/tftpboot 
-    - dist/ubby:/mnt:ro 
-  container_name: cobbler-compose
+service:
+  app:
+    build: .
+    restart: always
+    privileged: true
+    hostname: cobbler.ahchto.sigtomtech.com
+    ports:
+      - "80:80"
+      - "2202:22"
+      - "69:69"
+      - "25151:21515"
+      - "873:873"
+      - "443:443"
+    network_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro 
+      - etc/cobbler/settings:/etc/cobbler
+      - var/www/cobbler/images:/var/www/cobbler/images 
+      - var/www/cobbler/ks_mirror:/var/www/cobbler/ks_mirror 
+      - var/www/cobbler/links:/var/www/cobbler/links 
+      - var/lib/cobbler/config:/var/lib/cobbler/config
+      - var/lib/tftpboot:/var/lib/tftpboot 
+      - dist/ubby:/mnt:ro 
+    container_name: cobbler-compose
